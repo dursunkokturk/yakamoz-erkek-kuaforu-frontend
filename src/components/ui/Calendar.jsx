@@ -59,9 +59,20 @@ export function Calendar({ selectedDate, onSelectDate }) {
           if (!date) return <span key={`empty-${idx}`} className="ui-calendar__cell ui-calendar__cell--empty" />;
           const iso = date.format("YYYY-MM-DD");
           const isPast = date.isBefore(today, "day");
-          const isClosed = !isWorkingDay(date) || isDateClosed(date.format("YYYY-MM-DD")) ;
+          const isWeeklyClosed = !isWorkingDay(date);
+          const isAdminClosed = isDateClosed(iso);
+          const isClosed = !isWorkingDay(date) || isDateClosed(date.format("YYYY-MM-DD"));
           const isSelected = selectedDate === iso;
           const isDisabled = isPast || isClosed;
+
+          let title;
+          if (isWeeklyClosed) {
+            title = "kapalıyız";
+          } else if (isAdminClosed) {
+            const info = getClosedDayInfo(iso);
+            title = info?.reason ? info.reason: "Bugün Kapalıyız";
+          }
+
           return (
             <button
               key={iso}
@@ -76,7 +87,7 @@ export function Calendar({ selectedDate, onSelectDate }) {
                 .join(" ")}
               disabled={isDisabled}
               onClick={() => onSelectDate(iso)}
-              title={isClosed ? "Salı günleri kapalıyız" : undefined}
+              title={title}
             >
               {date.date()}
             </button>
