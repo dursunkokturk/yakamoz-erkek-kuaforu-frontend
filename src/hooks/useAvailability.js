@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useAppointments } from "../context/AppointmentContext";
+import { useClosedDays } from "../context/ClosedDayContext";
 import {
   generateTimeSlots,
   isPastDateTime,
@@ -13,11 +14,20 @@ import {
  */
 export function useAvailability(dateISO) {
   const { countActiveAppointmentsAt } = useAppointments();
+  const { isDateClosed, getClosedDayInfo } = useClosedDays();
 
   return useMemo(() => {
-    if (!dateISO || !isWorkingDay(dateISO)) {
-      return { isOpen: false, slots: [] };
+    if (!dateISO) return { isOpen: false, slots: [], closedReason: null };
+
+    if (!isWorkingDay(dateISO)) {
+      return { isOpen: false, slots: [], closedReason: "Salı günleri kapalıyız" };
     }
+    
+    if (isDateClosed(dateISO)) {
+      const info = getClosedDayInfo(dateISO);
+      return { isOpen: false, slots: [], closedReason: info ? `İşletme Kapalı:${info.reason}` : "İşletme bu tarihte kapalı" };
+    }
+    
     const slots = generateTimeSlots().map((time) => {
       const takenCount = countActiveAppointmentsAt(dateISO, time);
       const isPast = isPastDateTime(dateISO, time);
@@ -30,6 +40,6 @@ export function useAvailability(dateISO) {
         isDisabled: takenCount >= MAX_APPOINTMENTS_PER_SLOT || isPast,
       };
     });
-    return { isOpen: true, slots };
-  }, [dateISO, countActiveAppointmentsAt]);
+    return { isOpen: true, slots, closedReason: null };
+  }, [dateISO, countActiveAppointmentsAt, isDateClosed, getClosedDayInfo]);
 }

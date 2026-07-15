@@ -86,6 +86,86 @@ button {
   outline-offset: 2px;
 }
 
+/* ============ CLOSED DAYS MANAGER ============ */
+.closed-days-manager__hint {
+  max-width: 60ch;
+  font-size: 0.88rem;
+}
+.closed-days-manager__form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  align-items: end;
+  margin-bottom: 20px;
+  max-width: 420px;
+}
+
+.closed-days-manager__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.closed-days-manager__list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+.closed-days-manager__list li button {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: flex;
+  padding: 4px;
+  flex-shrink: 0;
+}
+.closed-days-manager__list li button:hover {
+  color: var(--color-red);
+}
+
+.closed-days-manager__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  gap: 12px;
+}
+.closed-days-manager__item div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.closed-days-manager__item strong {
+  font-size: 0.98rem;
+}
+.closed-days-manager__item span {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+.closed-days-manager__item button {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: flex;
+  padding: 4px;
+}
+.closed-days-manager__item button:hover {
+  color: var(--color-red);
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -1137,3 +1217,4 @@ button {
   font-size: 3.5rem;
   margin: 12px 0 4px;
 }
+

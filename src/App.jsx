@@ -21,6 +21,7 @@ import { Login } from "./components/pages/Login";
 import { NotFound } from "./components/pages/NotFound";
 
 import "./App.css";
+import { ClosedDayProvider } from "./context/ClosedDayContext";
 
 function App() {
   return (
@@ -28,33 +29,35 @@ function App() {
       <AuthProvider>
         <ServiceProvider>
           <BlockedCustomerProvider>
-            <AppointmentProvider>
-              <BrowserRouter>
-                <div className="app-shell">
-                  <Header />
-                  <main className="app-main">
-                    <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/hizmetler" element={<Services />} />
-                      <Route path="/randevu-al" element={<BookAppointment />} />
-                      <Route path="/randevularim" element={<MyAppointments />} />
-                      <Route path="/giris" element={<Login />} />
-                      <Route
-                        path="/admin"
-                        element={
-                          <ProtectedRoute>
-                            <AdminPanel />
-                          </ProtectedRoute>
-                        }
-                      />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </main>
-                  <Footer />
-                </div>
-                <ToastContainer position="top-center" autoClose={3500} theme="dark" />
-              </BrowserRouter>
-            </AppointmentProvider>
+            <ClosedDayProvider>
+              <AppointmentProvider>
+                <BrowserRouter>
+                  <div className="app-shell">
+                    <Header />
+                    <main className="app-main">
+                      <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/hizmetler" element={<Services />} />
+                        <Route path="/randevu-al" element={<BookAppointment />} />
+                        <Route path="/randevularim" element={<MyAppointments />} />
+                        <Route path="/giris" element={<Login />} />
+                        <Route
+                          path="/admin"
+                          element={
+                            <ProtectedRoute>
+                              <AdminPanel />
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </main>
+                    <Footer />
+                  </div>
+                  <ToastContainer position="top-center" autoClose={3500} theme="dark" />
+                </BrowserRouter>
+              </AppointmentProvider>
+            </ClosedDayProvider>
           </BlockedCustomerProvider>
         </ServiceProvider>
       </AuthProvider>

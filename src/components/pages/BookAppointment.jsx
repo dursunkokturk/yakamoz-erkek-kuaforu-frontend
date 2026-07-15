@@ -42,7 +42,7 @@ export function BookAppointment() {
 
   const selectedServiceId = watch("serviceId");
   const selectedService = services.find((s) => s.id === selectedServiceId);
-  const { isOpen, slots } = useAvailability(selectedDate);
+  const { isOpen, slots, closedReason } = useAvailability(selectedDate);
 
   function onSubmit(values) {
     const fullName = normalizeName(values.fullName);
@@ -201,7 +201,7 @@ export function BookAppointment() {
               <div className="booking-form__times">
                 <span className="ui-field__label">Saat Seçin — {formatDateTR(selectedDate)}</span>
                 {!isOpen ? (
-                  <p className="booking-form__closed">Bu gün kapalıyız, lütfen başka bir gün seçin.</p>
+                  <p className="booking-form__closed">{closedReason || "Bu gün kapalıyız, lütfen başka bir gün seçin."}</p>
                 ) : (
                   <div className="time-slot-grid">
                     {slots.map((slot) => (

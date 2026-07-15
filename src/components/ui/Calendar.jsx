@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { dayjs, isWorkingDay } from "../../utils/dateUtils";
+import { useClosedDays } from "../../context/ClosedDayContext";
 
 const WEEKDAY_LABELS = ["Pt", "Sa", "Ça", "Pe", "Cu", "Ct", "Pz"];
 
 export function Calendar({ selectedDate, onSelectDate }) {
+  const { isDateClosed, getClosedDayInfo } = useClosedDays();
   const [visibleMonth, setVisibleMonth] = useState(() =>
     (selectedDate ? dayjs(selectedDate) : dayjs()).startOf("month")
   );
@@ -57,7 +59,7 @@ export function Calendar({ selectedDate, onSelectDate }) {
           if (!date) return <span key={`empty-${idx}`} className="ui-calendar__cell ui-calendar__cell--empty" />;
           const iso = date.format("YYYY-MM-DD");
           const isPast = date.isBefore(today, "day");
-          const isClosed = !isWorkingDay(date);
+          const isClosed = !isWorkingDay(date) || isDateClosed(date.format("YYYY-MM-DD")) ;
           const isSelected = selectedDate === iso;
           const isDisabled = isPast || isClosed;
           return (
