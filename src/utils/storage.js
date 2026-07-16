@@ -24,6 +24,7 @@ export const STORAGE_KEYS = {
   SERVICES: "yakamoz_services",
   BLOCKED_CUSTOMERS: "yakamoz_blocked_customers",
   AUTH_TOKEN: "yakamoz_auth_token",
+  ADMIN_CREDENTIALS: "yakamoz_admin_credentials",
   SETTINGS: "yakamoz_settings",
   CLOSED_DAYS: "yakamoz_closed_days",
   THEME: "yakamoz_theme",

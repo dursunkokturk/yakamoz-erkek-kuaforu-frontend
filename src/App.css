@@ -1385,3 +1385,25 @@ button {
   color: var(--color-text-muted);
   margin: -4px 0 16px;
 }
+
+/* ============ PASSWORD SETTINGS ============ */
+.password-settings {
+  max-width: 420px;
+}
+
+.password-settings__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.password-settings__header h3 {
+  margin: 0;
+}
+
+.password-settings__form {
+  display: flex;
+  flex-direction: column;
+}

@@ -10,6 +10,7 @@ import { Modal } from "../ui/Modal";
 import { Badge } from "../ui/Badge";
 import { ServiceManagerList } from "../services/ServiceManagerList";
 import { ClosedDaysManager } from "../admin/ClosedDaysManager";
+import { PasswordSettings } from "../admin/PasswordSettings";
 import { dayjs, formatDateShort, formatDateTR, todayISO } from "../../utils/dateUtils";
 
 const TABS = [
@@ -17,6 +18,7 @@ const TABS = [
   { id: "blocked", label: "Engellenen Müşteriler" },
   { id: "services", label: "Hizmetler" },
   { id: "closedDays", label: "Kapalı Günler" },
+  { id: "settings", label: "Ayarlar" },
 ];
 
 export function AdminPanel() {
@@ -52,6 +54,7 @@ export function AdminPanel() {
       {activeTab === "blocked" && <BlockedCustomersTab />}
       {activeTab === "services" && <ServiceManagerList />}
       {activeTab === "closedDays" && <ClosedDaysManager />}
+      {activeTab === "settings" && <PasswordSettings />}
     </div>
   );
 }
