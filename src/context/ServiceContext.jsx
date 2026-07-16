@@ -4,11 +4,11 @@ import { loadFromStorage, saveToStorage, STORAGE_KEYS } from "../utils/storage";
 const ServiceContext = createContext(null);
 
 const DEFAULT_SERVICES = [
-  { id: "svc-1", name: "Saç Kesimi", durationMinutes: 30, price: 300 },
-  { id: "svc-2", name: "Sakal Tıraşı", durationMinutes: 20, price: 200 },
-  { id: "svc-3", name: "Saç + Sakal", durationMinutes: 45, price: 450 },
-  { id: "svc-4", name: "Çocuk Saç Kesimi", durationMinutes: 25, price: 250 },
-  { id: "svc-5", name: "Fön / Şekillendirme", durationMinutes: 15, price: 150 },
+  { id: "svc-1", name: "Saç Kesimi", durationMinutes: 30, price: 300, isActive: true },
+  { id: "svc-2", name: "Sakal Tıraşı", durationMinutes: 20, price: 200, isActive: true },
+  { id: "svc-3", name: "Saç + Sakal", durationMinutes: 45, price: 450, isActive: true },
+  { id: "svc-4", name: "Çocuk Saç Kesimi", durationMinutes: 25, price: 250, isActive: true },
+  { id: "svc-5", name: "Fön / Şekillendirme", durationMinutes: 15, price: 150, isActive: true },
 ];
 
 export function ServiceProvider({ children }) {
@@ -34,13 +34,23 @@ export function ServiceProvider({ children }) {
     setServices((prev) => prev.filter((s) => s.id !== id));
   }
 
+  // Aktif / Pasif toggle
+  function toggleServiceStatus(id) {
+    setServices((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, isActive: !s.isActive } : s))
+    );
+  }
+
   function getServiceById(id) {
     return services.find((s) => s.id === id) || null;
   }
 
+  // Musteri Tarafinda Sadece Aktif Hizmetler Gosterilecek
+  const activeServices = services.filter((s) => s.isActive !== false);
+
   return (
     <ServiceContext.Provider
-      value={{ services, addService, updateService, deleteService, getServiceById }}
+      value={{ services, activeServices, addService, updateService, deleteService, toggleServiceStatus, getServiceById }}
     >
       {children}
     </ServiceContext.Provider>

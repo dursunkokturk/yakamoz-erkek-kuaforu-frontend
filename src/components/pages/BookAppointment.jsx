@@ -15,7 +15,7 @@ import { formatPhoneInput, isValidPhone, isValidName, normalizeName } from "../.
 import { formatDateTR } from "../../utils/dateUtils";
 
 export function BookAppointment() {
-  const { services } = useServices();
+  const { activeServices } = useServices();
   const { createAppointment } = useAppointments();
   const { isCustomerBlocked } = useBlockedCustomers();
   const location = useLocation();
@@ -41,7 +41,7 @@ export function BookAppointment() {
   });
 
   const selectedServiceId = watch("serviceId");
-  const selectedService = services.find((s) => s.id === selectedServiceId);
+  const selectedService = activeServices.find((s) => s.id === selectedServiceId);
   const { isOpen, slots, closedReason } = useAvailability(selectedDate);
 
   function onSubmit(values) {
@@ -59,7 +59,7 @@ export function BookAppointment() {
       toast.error("Lütfen bir saat seçin");
       return;
     }
-    const service = services.find((s) => s.id === values.serviceId);
+    const service = activeServices.find((s) => s.id === values.serviceId);
     if (!service) {
       toast.error("Lütfen bir işlem seçin");
       return;
@@ -178,7 +178,7 @@ export function BookAppointment() {
               {...register("serviceId", { required: "Lütfen bir işlem seçin" })}
             >
               <option value="">İşlem seçin</option>
-              {services.map((service) => (
+              {activeServices.map((service) => (
                 <option key={service.id} value={service.id}>
                   {service.name} · {service.durationMinutes} dk · {service.price} ₺
                 </option>
@@ -207,9 +207,8 @@ export function BookAppointment() {
                     {slots.map((slot) => (
                       <label
                         key={slot.time}
-                        className={`time-slot ${slot.isDisabled ? "time-slot--disabled" : ""} ${
-                          watch("time") === slot.time ? "time-slot--selected" : ""
-                        }`}
+                        className={`time-slot ${slot.isDisabled ? "time-slot--disabled" : ""} ${watch("time") === slot.time ? "time-slot--selected" : ""
+                          }`}
                       >
                         <input
                           type="radio"

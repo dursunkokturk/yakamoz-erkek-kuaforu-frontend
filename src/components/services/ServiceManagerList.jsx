@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, Eye, EyeOff } from "lucide-react";
 import { useServices } from "../../context/ServiceContext";
 import { Button } from "../ui/Button";
 import { Modal } from "../ui/Modal";
@@ -7,7 +7,7 @@ import { ServiceForm } from "./ServiceForm";
 import { toast } from "react-toastify";
 
 export function ServiceManagerList() {
-  const { services, addService, updateService, deleteService } = useServices();
+  const { services, addService, updateService, deleteService, toggleServiceStatus } = useServices();
   const [editingService, setEditingService] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -39,6 +39,14 @@ export function ServiceManagerList() {
     }
   }
 
+  // Servis Aktif Pasif Bildirimi
+  function handleToggle(service) {
+    toggleServiceStatus(service.id);
+    toast.info(
+      service.isActive ? `"${service.name}" pasife alındı` : `"${service.name}" aktif edildi`
+    );
+  }
+
   return (
     <div className="service-manager">
       <div className="service-manager__header">
@@ -55,8 +63,14 @@ export function ServiceManagerList() {
               <span className="service-manager__item-meta">
                 {service.durationMinutes} dk · {service.price} ₺
               </span>
+              <span className={`ui-badge ${service.isActive ? "ui-badge--approved" : "ui-badge--cancelled"}`}>
+                {service.isActive ? "Aktif" : "Pasif"}
+              </span>
             </div>
             <div className="service-manager__item-actions">
+              <button type="button" onClick={() => handleToggle(service)} aria-label={service.isActive ? "Pasife al" : "Aktif et"}>
+                {service.isActive ? <Eye size={16} /> : <EyeOff size={16} />}
+              </button>
               <button type="button" onClick={() => openEditForm(service)} aria-label="Düzenle">
                 <Pencil size={16} />
               </button>

@@ -3,8 +3,8 @@ import { useServices } from "../../context/ServiceContext";
 import { ServiceCard } from "../services/ServiceCard";
 
 export function Services() {
-  const { services } = useServices();
   const navigate = useNavigate();
+  const { activeServices } = useServices();
 
   function handleSelect(service) {
     navigate("/randevu-al", { state: { preselectedServiceId: service.id } });
@@ -17,7 +17,7 @@ export function Services() {
         <p>Bir hizmete dokunarak doğrudan randevu ekranına geçebilirsiniz.</p>
       </div>
       <div className="service-grid service-grid--wide">
-        {services.map((service) => (
+        {activeServices.map((service) => (
           <ServiceCard key={service.id} service={service} onSelect={handleSelect} />
         ))}
       </div>

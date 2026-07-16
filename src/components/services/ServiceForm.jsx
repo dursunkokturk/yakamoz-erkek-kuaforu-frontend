@@ -10,11 +10,11 @@ export function ServiceForm({ initialValues, onSubmit, onCancel }) {
     reset,
     formState: { errors, isSubmitting },
   } = useForm({
-    defaultValues: initialValues ?? { name: "", durationMinutes: 30, price: 0 },
+    defaultValues: initialValues ?? { name: "", durationMinutes: 30, price: 0, isActive: true },
   });
 
   useEffect(() => {
-    reset(initialValues ?? { name: "", durationMinutes: 30, price: 0 });
+    reset(initialValues ?? { name: "", durationMinutes: 30, price: 0, isActive: true });
   }, [initialValues, reset]);
 
   function submitHandler(values) {
@@ -22,6 +22,7 @@ export function ServiceForm({ initialValues, onSubmit, onCancel }) {
       name: values.name.trim(),
       durationMinutes: Number(values.durationMinutes),
       price: Number(values.price),
+      isActive: Boolean(values.isActive)
     });
   }
 
@@ -55,6 +56,13 @@ export function ServiceForm({ initialValues, onSubmit, onCancel }) {
           min: { value: 0, message: "Ücret negatif olamaz" },
         })}
       />
+
+      {/* Aktif / Pasif */}
+      <label className="service-form__toggle">
+        <input type="checkbox" {...register("isActive")} />
+        <span>Hizmet aktif (müşterilere gösterilsin)</span>
+      </label>
+
       <div className="service-form__actions">
         <Button type="button" variant="ghost" onClick={onCancel}>
           Vazgeç

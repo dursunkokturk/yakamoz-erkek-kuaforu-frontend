@@ -6,8 +6,8 @@ import { BarberStripe } from "../visuals/BarberStripe";
 import { Button } from "../ui/Button";
 
 export function Home() {
-  const { services } = useServices();
   const navigate = useNavigate();
+  const { activeServices } = useServices();
 
   return (
     <div className="page page--home">
@@ -62,7 +62,7 @@ export function Home() {
           </Link>
         </div>
         <div className="service-grid">
-          {services.slice(0, 4).map((service) => (
+          {activeServices.slice(0, 4).map((service) => (
             <ServiceCard key={service.id} service={service} />
           ))}
         </div>
