@@ -29,10 +29,10 @@ export function BlockedCustomerProvider({ children }) {
     setBlockedCustomers((prev) => prev.filter((b) => b.id !== id));
   }
 
-  /** Ad-soyad kontrolü ile müşterinin engelli listede olup olmadığını döner. */
-  function isCustomerBlocked(fullName) {
+  /** Ad-Soyad ve Telefon kontrolü ile müşterinin engelli listede olup olmadığını döner. */
+  function isCustomerBlocked(fullName,phone) {
     const key = nameKey(fullName);
-    return blockedCustomers.some((b) => nameKey(b.fullName) === key);
+    return blockedCustomers.some((b) => nameKey(b.fullName) === key && b.phone === phone);
   }
 
   return (

@@ -966,7 +966,10 @@ button {
 }
 
 .time-slot__tag {
-  display: none;
+  font-size: 0.62rem;
+  position: absolute;
+  bottom: 2px;
+  color: var(--color-red);
 }
 
 .booking-form__submit {

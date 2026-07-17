@@ -21,14 +21,18 @@ export function AppointmentProvider({ children }) {
   }, [appointments]);
 
   /** Belirli tarih+saatte, iptal edilmemiş kaç randevu var. */
-  function countActiveAppointmentsAt(date, time) {
+  function countActiveAppointmentsAt(date, time, excludeId = null) {
     return appointments.filter(
-      (a) => a.date === date && a.time === time && a.status !== APPOINTMENT_STATUS.CANCELLED
+      (a) =>
+        a.date === date &&
+        a.time === time &&
+        a.status !== APPOINTMENT_STATUS.CANCELLED &&
+        a.id !== excludeId
     ).length;
   }
 
-  function isSlotFull(date, time) {
-    return countActiveAppointmentsAt(date, time) >= MAX_APPOINTMENTS_PER_SLOT;
+  function isSlotFull(date, time, excludeId = null) {
+    return countActiveAppointmentsAt(date, time, excludeId) >= MAX_APPOINTMENTS_PER_SLOT;
   }
 
   function createAppointment(data) {
@@ -68,7 +72,7 @@ export function AppointmentProvider({ children }) {
   }
 
   function rescheduleAppointment(id, newDate, newTime) {
-    if (isSlotFull(newDate, newTime)) {
+    if (isSlotFull(newDate, newTime, id)) {
       throw new Error("SLOT_FULL");
     }
     setAppointments((prev) =>

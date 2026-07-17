@@ -47,7 +47,7 @@ export function BookAppointment() {
   function onSubmit(values) {
     const fullName = normalizeName(values.fullName);
 
-    if (isCustomerBlocked(fullName)) {
+    if (isCustomerBlocked(fullName, values.phone.trim())) {
       toast.error("Bu isimle randevu oluşturulamıyor. Lütfen berberle iletişime geçin.");
       return;
     }
