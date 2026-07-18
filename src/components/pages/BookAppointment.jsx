@@ -81,6 +81,8 @@ export function BookAppointment() {
     } catch (err) {
       if (err.message === "SLOT_FULL") {
         toast.error("Bu saat dolu, lütfen başka bir saat seçin");
+      } else if (err.message === "DATE_CLOSED") {
+        toast.error("İşletme bu tarihte kapalı, lütfen başka bir gün seçin");
       } else {
         toast.error("Randevu oluşturulamadı, tekrar deneyin");
       }

@@ -11,6 +11,7 @@ import { Badge } from "../ui/Badge";
 import { ServiceManagerList } from "../services/ServiceManagerList";
 import { ClosedDaysManager } from "../admin/ClosedDaysManager";
 import { PasswordSettings } from "../admin/PasswordSettings";
+import { BusinessHoursSettings } from "../admin/BusinessHoursSettings";
 import { dayjs, formatDateShort, formatDateTR, todayISO } from "../../utils/dateUtils";
 import { AppointmentFilters } from "../admin/AppointmentFilters";
 
@@ -55,7 +56,13 @@ export function AdminPanel() {
       {activeTab === "blocked" && <BlockedCustomersTab />}
       {activeTab === "services" && <ServiceManagerList />}
       {activeTab === "closedDays" && <ClosedDaysManager />}
-      {activeTab === "settings" && <PasswordSettings />}
+      {activeTab === "settings" && (
+        <>
+          <BusinessHoursSettings />
+          <PasswordSettings />
+        </>
+      )
+      }
     </div>
   );
 }
@@ -149,6 +156,8 @@ function AppointmentsTab() {
     } catch (err) {
       if (err.message === "SLOT_FULL") {
         toast.error("Seçilen saat dolu");
+      } else if (err.message === "DATE_CLOSED") {
+        toast.error("Bu tarihte işletme kapalı");
       } else {
         toast.error("Güncelleme başarısız");
       }

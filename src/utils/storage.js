@@ -25,7 +25,8 @@ export const STORAGE_KEYS = {
   BLOCKED_CUSTOMERS: "yakamoz_blocked_customers",
   AUTH_TOKEN: "yakamoz_auth_token",
   ADMIN_CREDENTIALS: "yakamoz_admin_credentials",
-  SETTINGS: "yakamoz_settings",
+  SETTINGS: "yakamoz_settings_v2", // v2: closedWeekday varsayılanındaki hata (2=Çarşamba) düzeltildi
+  SETTINGS_LEGACY: "yakamoz_settings", // v1 anahtarı — sadece göç (migration) için okunur
   CLOSED_DAYS: "yakamoz_closed_days",
   THEME: "yakamoz_theme",
   ADMIN_FILTERS: "yakamoz_admin_filters",

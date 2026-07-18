@@ -17,10 +17,21 @@ export const CLOSED_WEEKDAY = 1; // dayjs.weekday() — tr locale'de hafta Pazar
 export const SLOT_INTERVAL_MINUTES = 30;
 export const MAX_APPOINTMENTS_PER_SLOT = 2;
 
+// dayjs.weekday(): tr locale'de hafta Pazartesi (0) ile başlar
+export const WEEKDAY_LABELS = [
+  "Pazartesi",
+  "Salı",
+  "Çarşamba",
+  "Perşembe",
+  "Cuma",
+  "Cumartesi",
+  "Pazar",
+];
+
 /** Belirli bir tarihin salon için çalışma günü olup olmadığını döner (Salı kapalı). */
-export function isWorkingDay(date) {
+export function isWorkingDay(date, closedWeekday = CLOSED_WEEKDAY) {
   const d = dayjs(date);
-  return d.weekday() !== CLOSED_WEEKDAY;
+  return d.weekday() !== closedWeekday;
 }
 
 /** 09:00–19:00 arası, 30 dakikalık aralıklarla saat listesi üretir (19:00 kapanış olduğu için son randevu 18:30'dur). */

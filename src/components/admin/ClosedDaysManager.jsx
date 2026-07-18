@@ -3,20 +3,26 @@ import { toast } from "react-toastify";
 import { Trash2, Plus } from "lucide-react";
 import { useClosedDays } from "../../context/ClosedDayContext";
 import { Button } from "../ui/Button";
+import { Select } from "../ui/Select";
 import { formatDateTR } from "../../utils/dateUtils";
+
+const CLOSURE_REASONS = ["Resmi Tatil", "Cenaze", "Hastalık", "Bakım", "Diğer"];
 
 export function ClosedDaysManager() {
   const { closedDays, addClosedDay, removeClosedDay } = useClosedDays();
   const [date, setDate] = useState("");
-  const [reason, setReason] = useState("");
+  const [reasonType, setReasonType] = useState(CLOSURE_REASONS[0]);
+  const [customReason, setCustomReason] = useState("");
 
   function handleAdd() {
     if (!date) return toast.error("Lütfen bir tarih seçin");
+    const finalReason = reasonType === "Diğer" ? (customReason.trim() || "Diğer") : reasonType;
     try {
-      addClosedDay(date, reason.trim());
+      addClosedDay(date, finalReason);
       toast.success("Kapalı gün eklendi");
       setDate("");
-      setReason("");
+      setCustomReason("");
+      setReasonType(CLOSURE_REASONS[0])
     } catch (err) {
       if (err.message === "ALREADY_CLOSED") {
         toast.error("Bu tarih zaten kapalı olarak işaretli");
@@ -30,13 +36,22 @@ export function ClosedDaysManager() {
     <div className="closed-days-manager">
       <div className="closed-days-manager__form">
         <input type="date" className="ui-field__input" value={date} onChange={(e) => setDate(e.target.value)} />
-        <input
-          type="text"
-          className="ui-field__input"
-          placeholder="Neden (Resmi tatil, bakım, vb.)"
-          value={reason}
-          onChange={(e) => setReason(e.target.value)}
-        />
+
+        <Select value={reasonType} onChange={(e) => setReasonType(e.target.value)}>
+          {CLOSURE_REASONS.map((r) => (
+            <option key={r} value={r}>{r}</option>
+          ))}
+        </Select>
+
+        {reasonType === "Diğer" && (
+          <input
+            type="text"
+            className="ui-field__input"
+            placeholder="Neden (Resmi tatil, bakım, vb.)"
+            value={customReason}
+            onChange={(e) => setCustomReason(e.target.value)}
+          />
+        )}
         <Button size="sm" onClick={handleAdd}><Plus size={16} /> Ekle</Button>
       </div>
       <ul className="closed-days-manager__list">

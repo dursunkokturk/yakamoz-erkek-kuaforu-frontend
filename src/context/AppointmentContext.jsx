@@ -1,6 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { loadFromStorage, saveToStorage, STORAGE_KEYS } from "../utils/storage";
 import { MAX_APPOINTMENTS_PER_SLOT } from "../utils/dateUtils";
+import { getDateClosureInfo } from "../utils/scheduling";
+import { useClosedDays } from "./ClosedDayContext";
+import { useSettings } from "./SettingsContext";
 
 const AppointmentContext = createContext(null);
 
@@ -15,6 +18,10 @@ export function AppointmentProvider({ children }) {
   const [appointments, setAppointments] = useState(() =>
     loadFromStorage(STORAGE_KEYS.APPOINTMENTS, [])
   );
+
+  // isDateBookable'ın Ihtiyac Duydugu Bagimliliklar
+  const { isDateClosed, getClosedDayInfo } = useClosedDays();
+  const { settings } = useSettings();
 
   useEffect(() => {
     saveToStorage(STORAGE_KEYS.APPOINTMENTS, appointments);
@@ -35,7 +42,24 @@ export function AppointmentProvider({ children }) {
     return countActiveAppointmentsAt(date, time, excludeId) >= MAX_APPOINTMENTS_PER_SLOT;
   }
 
+  /* Tarih Kapali Mi? 
+    Hem haftalık kapalı gün 
+    hem admin tarafından eklenen özel günler dahil. */
+  function isDateBookable(date) {
+    const { isClosed } = getDateClosureInfo(date, {
+      closedWeekday: settings.closedWeekday,
+      isDateClosed,
+      getClosedDayInfo,
+    });
+    return !isClosed;
+  }
+
   function createAppointment(data) {
+
+    // Kapali Gun Kontrolu Artik Burada Uygulaniyor
+    if (!isDateBookable(data.date)) {
+      throw new Error("DATE_CLOSED");
+    }
     if (isSlotFull(data.date, data.time)) {
       throw new Error("SLOT_FULL");
     }
@@ -72,9 +96,14 @@ export function AppointmentProvider({ children }) {
   }
 
   function rescheduleAppointment(id, newDate, newTime) {
+    if (!isDateBookable(newDate)) {
+      throw new Error("DATE_CLOSED");
+    }
+
     if (isSlotFull(newDate, newTime, id)) {
       throw new Error("SLOT_FULL");
     }
+
     setAppointments((prev) =>
       prev.map((a) => (a.id === id ? { ...a, date: newDate, time: newTime } : a))
     );
@@ -99,6 +128,7 @@ export function AppointmentProvider({ children }) {
         getAppointmentsByDate,
         countActiveAppointmentsAt,
         isSlotFull,
+        isDateBookable
       }}
     >
       {children}

@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { dayjs, isWorkingDay } from "../../utils/dateUtils";
+import { dayjs, WEEKDAY_LABELS } from "../../utils/dateUtils";
+import { getDateClosureInfo } from "../../utils/scheduling";
 import { useClosedDays } from "../../context/ClosedDayContext";
+import { useSettings } from "../../context/SettingsContext";
 
-const WEEKDAY_LABELS = ["Pt", "Sa", "Ça", "Pe", "Cu", "Ct", "Pz"];
+const WEEKDAY_SHORT_LABELS = ["Pt", "Sa", "Ça", "Pe", "Cu", "Ct", "Pz"];
 
 export function Calendar({ selectedDate, onSelectDate }) {
   const { isDateClosed, getClosedDayInfo } = useClosedDays();
+  const { settings } = useSettings();
   const [visibleMonth, setVisibleMonth] = useState(() =>
     (selectedDate ? dayjs(selectedDate) : dayjs()).startOf("month")
   );
@@ -26,6 +29,8 @@ export function Calendar({ selectedDate, onSelectDate }) {
   function goToNextMonth() {
     setVisibleMonth((m) => m.add(1, "month"));
   }
+
+  const closedDayLabel = WEEKDAY_LABELS[settings.closedWeekday] ?? "";
 
   return (
     <div className="ui-calendar">
@@ -50,7 +55,7 @@ export function Calendar({ selectedDate, onSelectDate }) {
         </button>
       </div>
       <div className="ui-calendar__weekdays">
-        {WEEKDAY_LABELS.map((label) => (
+        {WEEKDAY_SHORT_LABELS.map((label) => (
           <span key={label}>{label}</span>
         ))}
       </div>
@@ -59,19 +64,13 @@ export function Calendar({ selectedDate, onSelectDate }) {
           if (!date) return <span key={`empty-${idx}`} className="ui-calendar__cell ui-calendar__cell--empty" />;
           const iso = date.format("YYYY-MM-DD");
           const isPast = date.isBefore(today, "day");
-          const isWeeklyClosed = !isWorkingDay(date);
-          const isAdminClosed = isDateClosed(iso);
-          const isClosed = !isWorkingDay(date) || isDateClosed(date.format("YYYY-MM-DD"));
+          const { isClosed, reason: title } = getDateClosureInfo(iso, {
+            closedWeekday: settings.closedWeekday,
+            isDateClosed,
+            getClosedDayInfo,
+          });
           const isSelected = selectedDate === iso;
           const isDisabled = isPast || isClosed;
-
-          let title;
-          if (isWeeklyClosed) {
-            title = "kapalıyız";
-          } else if (isAdminClosed) {
-            const info = getClosedDayInfo(iso);
-            title = info?.reason ? info.reason: "Bugün Kapalıyız";
-          }
 
           return (
             <button
@@ -87,14 +86,14 @@ export function Calendar({ selectedDate, onSelectDate }) {
                 .join(" ")}
               disabled={isDisabled}
               onClick={() => onSelectDate(iso)}
-              title={title}
+              title={title || undefined}
             >
               {date.date()}
             </button>
           );
         })}
       </div>
-      <p className="ui-calendar__legend">Salı günleri kapalıyız · Hizmet saatleri 09:00 – 19:00</p>
+      <p className="ui-calendar__legend">{closedDayLabel} günleri kapalıyız · Hizmet saatleri 09:00 – 19:00</p>
     </div>
   );
 }
