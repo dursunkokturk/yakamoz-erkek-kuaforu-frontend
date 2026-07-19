@@ -24,22 +24,25 @@ Yakamoz Erkek Kuaförü için geliştirilmiş, backend gerektirmeyen, tamamen is
 
 ### Müşteri Tarafı
 
-🏠 Ana Sayfa — İşletme tanıtımı, öne çıkan hizmetler, hızlı randevu çağrısı <br>
-✂️ Hizmetler — Aktif hizmetlerin listesi (isim, süre, ücret), hizmete tıklayarak doğrudan randevu formuna geçiş <br>
-📅 Randevu Al — Ad-soyad, telefon, hizmet seçimi, takvimden tarih seçimi ve o günün uygun saatlerini gösteren dinamik saat seçimi <br>
-🔍 Randevularım — Telefon numarasıyla geçmiş/gelecek randevu sorgulama <br>
-🌗 Açık/Koyu Tema — Sistem tercihine duyarlı, manuel değiştirilebilir tema anahtarı <br>
+|                   |                                                                                                                   |
+|:------------------|:------------------------------------------------------------------------------------------------------------------|
+| 🏠 Ana Sayfa      | İşletme tanıtımı, öne çıkan hizmetler, hızlı randevu çağrısı                                                      |
+| ✂️ Hizmetler      | Aktif hizmetlerin listesi (isim, süre, ücret), hizmete tıklayarak doğrudan randevu formuna geçiş                  |
+| 📅 Randevu Al     | Ad-soyad, telefon, hizmet seçimi, takvimden tarih seçimi ve o günün uygun saatlerini gösteren dinamik saat seçimi |
+| 🔍 Randevularım   | Telefon numarasıyla geçmiş/gelecek randevu sorgulama                                                              |
+| 🌗 Açık/Koyu Tema | Sistem tercihine duyarlı, manuel değiştirilebilir tema anahtarı                                                   |
 
 
 ### Admin (Berber Paneli) Tarafı
-
-🔐 Kullanıcı adı/şifre ile korumalı giriş (ProtectedRoute) <br>
-📋 Randevu Yönetimi — Güne göre randevu listeleme, durum/hizmet/isim filtreleme, randevu detayında onayla / iptal et / sil / tarih değiştir / müşteriyi engelle işlemleri <br>
-🚫 Engellenen Müşteriler — Kötüye kullanan müşterileri isim+telefon eşleşmesiyle engelleme/engel kaldırma <br>
-🛠️ Hizmet Yönetimi — Hizmet ekleme, düzenleme, silme, aktif/pasif yapma <br>
-📆 Kapalı Günler — Resmî tatil, bakım vb. sebeplerle özel gün kapatma <br>
-⚙️ Ayarlar — Haftalık kapalı gün seçimi, admin şifre değiştirme <br>
-
+|                          |                                                                                |
+|:-------------------------|:-------------------------------------------------------------------------------|
+| 🔐 Kullanıcı adı/şifre   | ile korumalı giriş (ProtectedRoute)                                            |
+| 📋 Randevu Yönetimi      | Güne göre randevu listeleme, durum/hizmet/isim filtreleme, randevu detayında onayla / iptal et / sil / tarih değiştir / müşteriyi engelle işlemleri |
+| 🚫 Engellenen Müşteriler | Kötüye kullanan müşterileri isim+telefon eşleşmesiyle engelleme/engel kaldırma |
+| 🛠️ Hizmet Yönetimi       | Hizmet ekleme, düzenleme, silme, aktif/pasif yapma                             |
+| 📆 Kapalı Günler         | Resmî tatil, bakım vb. sebeplerle özel gün kapatma                             |
+| ⚙️ Ayarlar               | Haftalık kapalı gün seçimi, admin şifre değiştirme                             |
+ 
 
 ### 🧭 Ekran Akışı
 
