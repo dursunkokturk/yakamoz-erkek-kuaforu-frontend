@@ -210,34 +210,38 @@ An appointment management application built for Yakamoz Men's Barbershop that re
 
 ### Customer Side
 
-- 🏠 Home — Business intro, featured services, quick booking call-to-action <br>
-- ✂️ Services — List of active services (name, duration, price); tapping a service jumps straight into the booking form <br>
-- 📅 Book Appointment — Full name, phone, service selection, date picker, and a dynamic time-slot picker showing that day's available times <br>
-- 🔍 My Appointments — Look up past/upcoming appointments by phone number <br>
-- 🌗 Light/Dark Theme — Respects system preference and can be toggled manually <br>
+|                     |                                                                                                         |
+|:--------------------|:--------------------------------------------------------------------------------------------------------|
+| 🏠 Home             | Business intro, featured services, quick booking call-to-action                                         |
+| ✂️ Services         | List of active services (name, duration, price); tapping a service jumps straight into the booking form |
+| 📅 Book Appointment | Full name, phone, service selection, date picker, and a dynamic time-slot picker showing that day's available times |
+| 🔍 My Appointments  | Look up past/upcoming appointments by phone number                                                      |
+| 🌗 Light/Dark Theme | Respects system preference and can be toggled manually                                                  |
 
 
 ### Admin (Barber Panel) Side
 
-- 🔐 Username/password-protected login (ProtectedRoute) <br>
-- 📋 Appointment Management — List appointments by day, filter by status/service/name, and from the appointment detail view approve / cancel / delete / reschedule / block customer <br>
-- 🚫 Blocked Customers — Block/unblock abusive customers using a name + phone match <br>
-- 🛠️ Service Management — Add, edit, delete, and activate/deactivate services <br>
-- 📆 Closed Days — Close specific dates for reasons like public holidays or maintenance <br>
-- ⚙️ Settings — Choose the weekly closed day, change the admin password <br>
+|                                |                                                                      |
+|:-------------------------------|:---------------------------------------------------------------------|
+| 🔐 Username/password-protected | login (ProtectedRoute)                                               |
+| 📋 Appointment Management      | List appointments by day, filter by status/service/name, and from the appointment detail view approve / cancel / delete / reschedule / block customer |
+| 🚫 Blocked Customers           | Block/unblock abusive customers using a name + phone match           |
+| 🛠️ Service Management          | Add, edit, delete, and activate/deactivate services                  |
+| 📆 Closed Days                 | Close specific dates for reasons like public holidays or maintenance |
+| ⚙️ Settings                    | Choose the weekly closed day, change the admin password              |
 
 
 ### 🧭 Screen Flow
 
-Home ──┬── Services ──► Book Appointment ──► Confirmation
-       ├── Book Appointment (direct)
-       ├── My Appointments (lookup by phone)
-       └── Admin Login ──► Barber Panel
-                              ├── Appointments (filter / approve / cancel / delete / reschedule / block)
-                              ├── Blocked Customers
-                              ├── Services (CRUD)
-                              ├── Closed Days
-                              └── Settings (working days, password)
+Home ──┬── Services ──► Book Appointment ──► Confirmation <br>
+       ├── Book Appointment (direct) <br>
+       ├── My Appointments (lookup by phone) <br>
+       └── Admin Login ──► Barber Panel <br>
+                              ├── Appointments (filter / approve / cancel / delete / reschedule / block) <br>
+                              ├── Blocked Customers <br>
+                              ├── Services (CRUD) <br>
+                              ├── Closed Days <br>
+                              └── Settings (working days, password) <br>
 
 
 ### 🧰 Tech Stack
